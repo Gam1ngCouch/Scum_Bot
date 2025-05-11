@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS scum_bot;
+
+USE scum_bot;
+
+CREATE TABLE IF NOT EXISTS users (
+  discord_id VARCHAR(50) PRIMARY KEY,
+  steam_id VARCHAR(50),
+  verify_code VARCHAR(10),
+  verified BOOLEAN DEFAULT FALSE,
+  banned BOOLEAN DEFAULT FALSE
+);

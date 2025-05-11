@@ -1,0 +1,36 @@
+-version: '3.8'
+
+services:
+  bot:
+    build: ./bot
+    container_name: scum_discord_bot
+    volumes:
+      - ./bot:/app
+      - ./logs:/scumlogs             # Ordner für SCUM-Logdateien
+    depends_on:
+      - mariadb
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./bot/.env
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:11
+    container_name: scum_mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: geheim
+      MYSQL_DATABASE: scum_bot
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    container_name: scum_adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+
+volumes:
+  mariadb_data:
